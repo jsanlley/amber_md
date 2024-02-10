@@ -396,21 +396,30 @@ EOF
 cat > cleanup.sh << EOF
 #!/bin/bash
 
-mkdir rep1
-cp *prmtop rep1
-cp *equil.rst rep1
-cp *prod* rep1
+mkdir prod
+mkdir prod/rep1
+cp *prmtop prod/rep1
+cp *equil.rst prod/rep1
+cp *equil_aligned.nc prod/rep1
+cp *prod.* prod/rep1
+
+cp prod/rep1 prod/rep2
+cp prod/rep2 prod/rep3
 
 mkdir prep
-mv *solvated* prep
-mv *run_prep* prep
-mv *pdb* prep
-mv *min* prep
-mv *heat* prep
-mv *equil* prep
-mv *leap* prep
+mkdir prep/min
+mv *min* prep/min
+mkdir prep/heat
+mv *heat* prep/heat
+mkdir prep/equil
+mv *equil* prep/equil
 
-rm *prmtop
-rm *equil.rst 
-rm *prod*
+mkdir parm
+mkdir parm/antechamber
+mv *antechamber* parm/antechamber
+mv *A* parm/antechamber
+
+mkdir parm/tleap
+mv *tleap* parm/tleap
+mv *solvated* parm/tleap
 EOF
