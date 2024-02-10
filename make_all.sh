@@ -403,9 +403,6 @@ cp *equil.rst prod/rep1
 cp *equil_aligned.nc prod/rep1
 cp *prod.* prod/rep1
 
-cp prod/rep1 prod/rep2
-cp prod/rep2 prod/rep3
-
 mkdir prep
 mkdir prep/min
 mv *min* prep/min
@@ -420,6 +417,6 @@ mv *antechamber* parm/antechamber
 mv *A* parm/antechamber
 
 mkdir parm/tleap
-mv *tleap* parm/tleap
+mv *leap* parm/tleap
 mv *solvated* parm/tleap
 EOF
