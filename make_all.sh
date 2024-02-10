@@ -355,7 +355,7 @@ cat > run_prep.slurm << EOF
 #SBATCH --gpu-bind=closest
 #SBATCH --account=kif-delta-gpu
 #SBATCH --no-requeue
-#SBATCH -t 47:00:00
+#SBATCH -t 2:00:00
 
 set -xv
 source $HOME/.bashrc
