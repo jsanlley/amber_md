@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# # of salts for monomeric system = ~ 52
+# # of salts for dimeric system = ~64
+
 #If parametrizing a small molecule, make script to run antechamber on pdb file of molecule (extracted from final structure)
 cat > run_antechamber.sh << EOF
 #!/bin/bash
@@ -21,7 +24,7 @@ EOF
 
 #Make ligand parameters
 cat > tleap_parm.in << EOF
-source leaprc.protein.ff14SB
+source leaprc.protein.ff19SB
 source leaprc.gaff
 
 loadamberparams 7YY.frcmod
@@ -33,7 +36,7 @@ quit
 EOF
 
 #Prepare apo model
-cat > tleap_apo.in << EOF
+cat > tleap_apo_monomer.in << EOF
 source leaprc.gaff
 source leaprc.water.opc
 source leaprc.protein.ff19SB
@@ -41,7 +44,25 @@ source leaprc.protein.ff19SB
 MPRO = loadpdb $1.pdb
 solvateoct MPRO TIP3PBOX 10 iso
 
-addionsrand MPRO Na+ 50 Cl- 50           #0.150M salt conc.
+addionsrand MPRO Na+ 52 Cl- 52           #0.150M salt conc.
+addionsrand MPRO Na+ 4
+
+saveoff MPRO $1_solvated.lib                     #save off files
+saveamberparm MPRO $1_solvated.prmtop $1_solvated.inpcrd       #save parm
+savepdb MPRO $1_solvated.pdb                           #save pdb
+quit
+EOF
+
+#Prepare apo model
+cat > tleap_apo_dimer.in << EOF
+source leaprc.gaff
+source leaprc.water.opc
+source leaprc.protein.ff19SB
+
+MPRO = loadpdb $1.pdb
+solvateoct MPRO TIP3PBOX 10 iso
+
+addionsrand MPRO Na+ 64 Cl- 64           #0.150M salt conc.
 addionsrand MPRO Na+ 4
 
 saveoff MPRO $1_solvated.lib                     #save off files
@@ -51,7 +72,7 @@ quit
 EOF
 
 #Prepare ligand-bound model
-cat > tleap_ens.in << EOF
+cat > tleap_ens_monomer.in << EOF
 source leaprc.gaff
 source leaprc.water.opc
 source leaprc.protein.ff19SB
@@ -60,7 +81,28 @@ source leaprc.protein.ff19SB
 loadamberparams 7YY.frcmod
 loadoff 7YY.lib
 
-addionsrand MPRO Na+ 50 Cl- 50           #0.150M salt conc.
+addionsrand MPRO Na+ 52 Cl- 52           #0.150M salt conc.
+addionsrand MPRO Na+ 4
+
+saveoff MPRO $1_solvated.lib                     #save off files
+saveamberparm MPRO $1_solvated.prmtop $1_solvated.inpcrd       #save parm
+savepdb MPRO $1_solvated.pdb                           #save pdb
+
+
+quit
+EOF
+
+#Prepare ligand-bound model
+cat > tleap_ens_dimer.in << EOF
+source leaprc.gaff
+source leaprc.water.opc
+source leaprc.protein.ff19SB
+
+
+loadamberparams 7YY.frcmod
+loadoff 7YY.lib
+
+addionsrand MPRO Na+ 64 Cl- 64           #0.150M salt conc.
 addionsrand MPRO Na+ 4
 
 saveoff MPRO $1_solvated.lib                     #save off files
