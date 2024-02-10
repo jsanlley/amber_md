@@ -410,6 +410,7 @@ mkdir prep/heat
 mv *heat* prep/heat
 mkdir prep/equil
 mv *equil* prep/equil
+mv *_prep* prep/
 
 mkdir parm
 mkdir parm/antechamber
@@ -419,4 +420,6 @@ mv *A* parm/antechamber
 mkdir parm/tleap
 mv *leap* parm/tleap
 mv *solvated* parm/tleap
+
+rm cleanup.sh
 EOF
