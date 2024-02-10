@@ -305,9 +305,9 @@ cat > run_prod.slurm << EOF
 #SBATCH --no-requeue
 #SBATCH -t 47:00:00
 
+set -xv
 source $HOME/.bashrc
 conda activate amber
-module load amber
 
 pmemd.cuda -O -i prod.mdin -o $1_prod1.mdout -p $1_solvated.prmtop -c $1_equil.rst -r $1_prod1.rst -ref $1_equil.rst -inf $1_prod1.info -x $1_prod1.nc
 #pmemd.cuda -O -i prod.mdin -o $1_prod2.mdout -p $1_solvated.prmtop -c $1_prod1.rst -r $1_prod2.rst -ref $1_prod1.rst -inf $1_prod2.info -x $1_prod2.nc
@@ -357,9 +357,9 @@ cat > run_prep.slurm << EOF
 #SBATCH --no-requeue
 #SBATCH -t 47:00:00
 
+set -xv
 source $HOME/.bashrc
 conda activate amber
-module load amber
 
 #Parametrize and solvate (check ions)
 tleap -f tleap.in
