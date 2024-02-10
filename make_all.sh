@@ -63,7 +63,7 @@ MPRO = loadpdb $1.pdb
 solvateoct MPRO TIP3PBOX 10 iso
 
 addionsrand MPRO Na+ 64 Cl- 64           #0.150M salt conc.
-addionsrand MPRO Na+ 4
+addionsrand MPRO Na+ 8
 
 saveoff MPRO $1_solvated.lib                     #save off files
 saveamberparm MPRO $1_solvated.prmtop $1_solvated.inpcrd       #save parm
@@ -103,7 +103,7 @@ loadamberparams 7YY.frcmod
 loadoff 7YY.lib
 
 addionsrand MPRO Na+ 64 Cl- 64           #0.150M salt conc.
-addionsrand MPRO Na+ 4
+addionsrand MPRO Na+ 8
 
 saveoff MPRO $1_solvated.lib                     #save off files
 saveamberparm MPRO $1_solvated.prmtop $1_solvated.inpcrd       #save parm
