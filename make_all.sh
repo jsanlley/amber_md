@@ -32,6 +32,7 @@ saveamberparm 7YY 7YY.prmtop 7YY.rst7
 quit
 EOF
 
+#Prepare apo model
 cat > tleap_apo.in << EOF
 source leaprc.gaff
 source leaprc.water.opc
@@ -49,6 +50,7 @@ savepdb MPRO $1_solvated.pdb                           #save pdb
 quit
 EOF
 
+#Prepare ligand-bound model
 cat > tleap_ens.in << EOF
 source leaprc.gaff
 source leaprc.water.opc
@@ -250,9 +252,9 @@ cat > run_prod.slurm << EOF
 #SBATCH --job-name=mpro_md
 #SBATCH --output=$1_prod_%j.out
 #SBATCH --partition=gpuA100x4
-#SBATCH --mem=55G
+#SBATCH --mem=16g
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=8
+#SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=4
 #SBATCH --constraint="scratch"
 #SBATCH --gpus-per-node=1
@@ -302,9 +304,9 @@ cat > run_prep.slurm << EOF
 #SBATCH --job-name=mpro_md
 #SBATCH --output=$1_prep_%j.out
 #SBATCH --partition=gpuA100x4
-#SBATCH --mem=55G
+#SBATCH --mem=16g
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=8
+#SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=4
 #SBATCH --constraint="scratch"
 #SBATCH --gpus-per-node=1
