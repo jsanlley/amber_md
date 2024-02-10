@@ -361,9 +361,6 @@ set -xv
 source $HOME/.bashrc
 conda activate amber
 
-#Parametrize and solvate (check ions)
-tleap -f tleap.in
-
 pmemd.cuda -O -i rmin.mdin -o $1_rmin.mdout -p $1_solvated.prmtop -c $1_solvated.inpcrd -r $1_rmin.rst -ref $1_solvated.inpcrd -inf $1_rmin.info
 pmemd.cuda -O -i umin.mdin -o $1_umin.mdout -p $1_solvated.prmtop -c $1_rmin.rst -r $1_umin.rst -ref $1_rmin.rst -inf $1_rmin.info
 pmemd.cuda -O -i rheat.mdin -o $1_rheat.mdout -p $1_solvated.prmtop -c $1_umin.rst -r $1_rheat.rst -ref $1_umin.rst -inf $1_rheat.info -x $1_rheat.nc
