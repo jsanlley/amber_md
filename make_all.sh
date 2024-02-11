@@ -81,6 +81,9 @@ source leaprc.protein.ff19SB
 loadamberparams 7YY.frcmod
 loadoff 7YY.lib
 
+MPRO = loadpdb $1.pdb
+solvateoct MPRO TIP3PBOX 10 iso
+
 addionsrand MPRO Na+ 52 Cl- 52           #0.150M salt conc.
 addionsrand MPRO Na+ 4
 
@@ -101,6 +104,9 @@ source leaprc.protein.ff19SB
 
 loadamberparams 7YY.frcmod
 loadoff 7YY.lib
+
+MPRO = loadpdb $1.pdb
+solvateoct MPRO TIP3PBOX 10 iso
 
 addionsrand MPRO Na+ 64 Cl- 64           #0.150M salt conc.
 addionsrand MPRO Na+ 8
