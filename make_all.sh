@@ -399,7 +399,7 @@ cat > cleanup.sh << EOF
 mkdir prod
 mkdir prod/rep1
 cp *prmtop prod/rep1
-cp *equil.rst prod/rep1
+cp *_equil.rst prod/rep1
 cp *equil_aligned.nc prod/rep1
 cp *prod.* prod/rep1
 
