@@ -419,6 +419,7 @@ mkdir parm
 mkdir parm/antechamber
 mv *antechamber* parm/antechamber
 mv *A* parm/antechamber
+mv sqm* parm/antechamber
 
 mkdir parm/tleap
 mv *leap* parm/tleap
