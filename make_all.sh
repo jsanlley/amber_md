@@ -297,7 +297,7 @@ EOF
 #Make slurm script for running production runs
 cat > run_prod.slurm << EOF
 #!/bin/bash
-#SBATCH --job-name=$1_prod1
+#SBATCH --job-name=prod1_1_$1
 #SBATCH --output=$1_%j.out
 #SBATCH --partition=gpuA100x4
 #SBATCH --mem=16g
@@ -349,7 +349,7 @@ EOF
 #Make slurm script to run all commands
 cat > run_prep.slurm << EOF
 #!/bin/bash
-#SBATCH --job-name=$1_prep
+#SBATCH --job-name=prep_$1
 #SBATCH --output=$1_prep_%j.out
 #SBATCH --partition=gpuA100x4
 #SBATCH --mem=16g
