@@ -425,4 +425,5 @@ mv *leap* parm/tleap
 mv *solvated* parm/tleap
 
 rm cleanup.sh
+rm *prod.*
 EOF
