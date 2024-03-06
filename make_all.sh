@@ -95,6 +95,30 @@ savepdb MPRO $1_solvated.pdb                           #save pdb
 quit
 EOF
 
+#Make nirmatrelvir bound system
+cat > tleap_nrm_monomer.in << EOF
+source leaprc.gaff
+source leaprc.water.opc
+source leaprc.protein.ff19SB
+
+loadamberprep nrm_145.prepin
+loadamberparams nrm_145.frcmod2
+loadamberparams nrm_145.frcmod1
+
+MPRO = loadpdb $1.pdb
+solvateoct MPRO TIP3PBOX 10 iso
+
+addionsrand MPRO Na+ 52 Cl- 52           #0.150M salt conc.
+addionsrand MPRO Na+ 4
+
+saveoff MPRO $1_solvated.lib                     #save off files
+saveamberparm MPRO $1_solvated.prmtop $1_solvated.inpcrd       #save parm
+savepdb MPRO $1_solvated.pdb                           #save pdb
+
+
+quit
+EOF
+
 #Prepare ligand-bound model
 cat > tleap_ens_dimer.in << EOF
 source leaprc.gaff
@@ -403,14 +427,14 @@ cat > cleanup.sh << EOF
 #!/bin/bash
 
 mkdir prod
-mkdir prod/rep1
-cp *prmtop prod/rep1
-cp *_equil.rst prod/rep1
-cp *equil_aligned.nc prod/rep1
-cp *prod.* prod/rep1
+mkdir prod/1
+cp *prmtop prod/1
+cp *_equil.rst prod/1
+cp *equil_aligned.nc prod/1
+cp *prod.* prod/1
 
-cp -r prod/rep1 prod/rep2
-cp -r prod/rep2 prod/rep3
+cp -r prod/1 prod/2
+cp -r prod/2 prod/3
 
 mkdir prep
 mkdir prep/min
