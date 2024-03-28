@@ -6,5 +6,5 @@ loadamberparams nrm_145.frcmod2
 loadamberparams nrm_145.frcmod1
 
 
-x = loadpdb mpro_nirm_monomer.pdb
-#check x
+x = loadpdb mpro_nirm_dimer.pdb
+check x
