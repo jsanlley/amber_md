@@ -1,0 +1,5 @@
+parm mpro_apo_dimer_solvated.prmtop
+trajin mpro_apo_dimer_prod_aligned.nc
+strip :WAT
+strip :Na+,Cl-
+average mpro_apo_dimer_average.pdb pdb :1-612 start 1 stop 1000 offset 10 chainid A conect 

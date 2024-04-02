@@ -37,10 +37,11 @@ for name, site  in b_sites.items():
 all_residues = []
 for sites in a_sites.values():
     for residue in sites:
-        all_residues.append(residue)
+        all_residues.append(str(residue))
 
 for sites in b_sites.values():
     for residue in sites:
-        all_residues.append(residue)
+        all_residues.append(str(residue))
 
-print(set(all_residues))
+all_residues = set(all_residues)
+print(','.join(all_residues))

@@ -1,0 +1,11 @@
+#!/bin/bash
+#path = 'net/gpfs-amarolab/jsanlleyhernandez/mpro_md/mpro_apo/mpro_apo_dimer/prod/1/'
+cat > get_dry_pdb_from_prod.cpptraj << EOF
+parm $1_solvated.prmtop
+trajin $1_prod1.nc
+autoimage
+rms fit :1-612
+strip :WAT,Cl-,Na+
+trajout $1_prod_aligned_first_dry.pdb pdb
+EOF
+

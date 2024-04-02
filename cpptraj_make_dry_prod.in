@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cat > get_dry_prod.cpptraj << EOF
+parm $1_solvated.prmtop
+trajin $1_prod_aligned_$2.nc
+strip :WAT,Cl-,Na+
+trajout $1_prod_aligned_dry_$2.nc
+EOF
+
