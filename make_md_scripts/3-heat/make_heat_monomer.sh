@@ -62,5 +62,5 @@ echo 'Running rheat'
 pmemd.cuda -O -i rheat.mdin -o $1_rheat.mdout -p $1_solvated.prmtop -c $1_min5.rst -r $1_rheat.rst -ref $1_min5.rst -inf $1_rheat.info -x $1_rheat.nc
 
 echo 'Running heat'
-pmemd.cuda -O -i heat.mdin -o $1_rheat.mdout -p $1_solvated.prmtop -c $1_rheat.rst -r $1_heat.rst -ref $1_rheat.rst -inf $1_heat.info -x $1_heat.nc
+pmemd.cuda -O -i heat.mdin -o $1_heat.mdout -p $1_solvated.prmtop -c $1_rheat.rst -r $1_heat.rst -ref $1_rheat.rst -inf $1_heat.info -x $1_heat.nc
 EOF

@@ -25,10 +25,10 @@ cat > prod.mdin << EOF
 EOF
 
 #Make slurm script for running production runs
-cat > run_prod.slurm << EOF
+cat > run_prod_"$3".slurm << EOF
 #!/bin/bash
-#SBATCH --job-name=1_1_??
-#SBATCH --output=$1_%j.out
+#SBATCH --job-name=$2_$3_0
+#SBATCH --output=$1_prod_rep_run_abv_%j.out
 #SBATCH --partition=gpuA100x4
 #SBATCH --mem=16g
 #SBATCH --nodes=1

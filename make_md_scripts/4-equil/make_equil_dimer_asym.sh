@@ -77,7 +77,3 @@ pmemd.cuda -O -i equil.mdin -o $1_equil.mdout -p $1_solvated.prmtop -c $1_requil
 
 cpptraj -i combine_equil.cpptraj
 EOF
-
-module load amber
-. run_equil.sh
-. combine_equil.cpptraj

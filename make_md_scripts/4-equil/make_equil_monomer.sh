@@ -75,6 +75,7 @@ pmemd.cuda -O -i requil.mdin -o $1_requil.mdout -p $1_solvated.prmtop -c $1_heat
 echo 'Running equil'
 pmemd.cuda -O -i equil.mdin -o $1_equil.mdout -p $1_solvated.prmtop -c $1_requil.rst -r $1_equil.rst -ref $1_requil.rst -inf $1_equil.info -x $1_equil.nc
 
+wait
 cpptraj -i combine_equil.cpptraj
 EOF
 

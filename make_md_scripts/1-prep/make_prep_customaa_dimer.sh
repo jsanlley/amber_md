@@ -9,9 +9,9 @@ source leaprc.gaff
 source leaprc.water.opc
 source leaprc.protein.ff19SB
 
-
-loadamberparams $2.frcmod
-loadoff $2.lib
+loadamberprep $2.prepin
+loadamberparams $2.frcmod2
+loadamberparams $2.frcmod1
 
 MPRO = loadpdb $1.pdb
 solvateoct MPRO OPCBOX 10 iso
@@ -28,13 +28,13 @@ quit
 EOF
 
 #load module
-module load amber
+#module load amber
 
 #run tleap
-tleap -f tleap_*
+#tleap -f tleap_*
 
 #delete input script and log file
-rm leap.log
-rm tleap_*
+#rm leap.log
+#rm tleap_*
 
 echo 'done'

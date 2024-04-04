@@ -23,11 +23,19 @@ cat > cleanup.sh << EOF
 #!/bin/bash
 
 mkdir prod
+
 mkdir prod/1
+mv prod.mdin prod/1
 cp *prmtop prod/1
 cp *_equil.rst prod/1
+
 cp -r prod/1 prod/2
 cp -r prod/2 prod/3
+
+mv *_1.slurm prod/1
+mv *_2.slurm prod/2
+mv *_3.slurm prod/3
+
 
 mkdir prep
 mkdir prep/min
