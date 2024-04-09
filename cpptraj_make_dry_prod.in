@@ -1,9 +1,21 @@
 #!/bin/bash
+cat > combine_prod.cpptraj << EOF
+
+EOF
+
 
 cat > get_dry_prod.cpptraj << EOF
 parm $1_solvated.prmtop
-trajin $1_prod_aligned_$2.nc
-strip :WAT,Cl-,Na+
-trajout $1_prod_aligned_dry_$2.nc
+trajin $1_prod1.nc 1 last 10
+trajin $1_prod2.nc 1 last 10
+trajin $1_prod3.nc 1 last 10
+trajin $1_prod4.nc 1 last 10
+autoimage
+rms fit :1-$2
+strip :WAT,Na+,Cl- nobox parmout $1_dry.prmtop
+trajout $1_prod_aligned_dry.nc
+go
 EOF
 
+cpptraj -i get_dry_prod.cpptraj
+#rm *.cpptraj
