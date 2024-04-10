@@ -43,5 +43,7 @@ module load amber
 cpptraj -i combine_prod.cpptraj
 cpptraj -i combine_prod_dry.cpptraj
 wait
+
 cp *.prmtop ../../
 cp *aligned_dry* ../../
+rm *cpptraj*
