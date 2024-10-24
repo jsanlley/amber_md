@@ -63,10 +63,10 @@ EOF
 module load amber
 
 #run parm
-. run_antecchamber.sh
+. run_antechamber.sh
 tleap -f tleap_parm.in
 tleap -f tleap_???_*
 rm leap.log
 
 #remove scripts
-rm tleap*
+#rm tleap*

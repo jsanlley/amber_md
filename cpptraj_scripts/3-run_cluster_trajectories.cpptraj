@@ -1,0 +1,33 @@
+#!/bin/bash
+path='TRAJECTORIES_main_protease_6LU7_amarolab/'$1
+gpfs='/net/gpfs-amarolab/jsanlleyhernandez/mpro_interface_sztain'
+output=$gpfs/$1_cluster_output
+mkdir $output
+
+cat > $input/run_cpptraj.in << EOF
+parm $1.prmtop
+trajin 1/$1.nc
+trajin 2/$1.nc
+trajin 3/$1.nc
+trajin 4/$1.nc
+trajin 5/$1.nc
+cluster cl \
+ kmeans clusters 10 randompoint maxit 500 \
+ rms :1-612@CA&!@H= \
+ sieve 10 random \ 
+ out $output/cnuvtime.dat \
+ summary $output/summary.dat \ 
+ info $output/info.dat \
+ cpopvtime $output/cpopvtime.agr normframe \
+ repout $output/rep repfmt pdb \
+ singlerepout $output/singlerep.nc singlerepfmt netcdf \
+ avgout $output/avg avgfmt pdb
+run
+EOF
+
+module load amber
+cd $path
+cpptraj -i run_cpptraj.in
+wait
+rm cpptraj.in
+cd ../../

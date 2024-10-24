@@ -1,0 +1,30 @@
+#!/bin/bash
+# $1 system name (full) mpro_apo_dimer
+# $2 monomer vs dimer
+# $3 number of replica (1 2 or 3)
+
+if [ $2 = 'monomer' ]
+
+then
+        length=306
+
+elif [ $2 = 'dimer' ]
+then
+        length=612
+fi
+echo $length
+
+#make cpptraj script to align and visualize equilibration run
+cat > ccm.cpptraj << EOF
+parm $1_dry.prmtop
+trajin $1_prod_aligned_dry_1.nc 1 last 
+trajin $1_prod_aligned_dry_2.nc 1 last
+trajin $1_prod_aligned_dry_3.nc 1 last
+rms first
+matrix correl @CA out $1_correl.dat byres
+go
+EOF
+
+module load amber
+cpptraj -i ccm.cpptraj
+rm *cpptraj

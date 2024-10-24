@@ -2,7 +2,7 @@
 
 module load amber
 
-. ~/scripts/amber_md/make_md_scripts/1-prep/make_prep_$3.sh $1 $2
+. ~/scripts/amber_md/make_md_scripts/1-prep/make_prep_apo.sh $1
 . ~/scripts/amber_md/make_md_scripts/2-min/make_min_$3.sh $1 
 . ~/scripts/amber_md/make_md_scripts/3-heat/make_heat_$3.sh $1
 . ~/scripts/amber_md/make_md_scripts/4-equil/make_equil_$3.sh $1

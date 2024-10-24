@@ -1,0 +1,36 @@
+#!/bin/bash
+# $1 system name (full) mpro_apo_dimer
+# $2 monomer vs dimer
+# $3 number of replica (1 2 or 3)
+
+#run from given system in mpro_md directory (mpro_md/mpro_apo)
+if [ $2 = 'monomer' ]
+
+then 
+	length=306
+
+elif [ $2 = 'dimer' ] 
+then
+	length=612
+fi
+echo $length
+
+#make cpptraj script to align and visualize equilibration run
+cat > combine_prod.cpptraj << EOF
+parm $1_solvated.prmtop
+trajin $1_prod1.nc 1 last 10
+trajin $1_prod2.nc 1 last 10
+trajin $1_prod3.nc 1 last 10
+trajin $1_prod4.nc 1 last 10
+autoimage
+rms first :1-$length@CA 
+atomicfluct MyFluct out $1_rmsf_$3.dat @C,CA,N byres
+run
+EOF
+
+module load amber
+cpptraj -i combine_prod.cpptraj
+
+wait
+
+rm *cpptraj*

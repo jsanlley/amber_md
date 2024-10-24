@@ -1,0 +1,14 @@
+#!/bin/bash
+#path = 'net/gpfs-amarolab/jsanlleyhernandez/mpro_md/mpro_apo/mpro_apo_dimer/prod/1/'
+
+# $1 = flag for pdb name 
+
+#make script
+cat > get_dry_pdb_from_prod.cpptraj << EOF
+parm $1_dry.prmtop 				#load topology
+trajin $1_prod_aligned_dry_1.nc 1 last 100 	#load trajectory, change  <start> last <offset>
+autoimage				#align
+strip :WAT,Cl-,Na+			#dry (optional)
+trajout $1_combined.pdb pdb 			#output dry pdb from sliced traj
+EOF
+

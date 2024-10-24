@@ -1,0 +1,47 @@
+#!/bin/bash
+
+mkdir cpptraj_cluster_output
+output = ./cpptraj_cluster
+
+#example (mpro_apo_dimer)
+#one topology, three trajectories
+#clustering based on RMS? or another criteria
+
+cat > cluster_povme_test.cpptraj << EOF
+parm mpro_apo_dimer_dry.prmtop
+trajin mpro_apo_dimer_prod_aligned_dry_1.nc
+trajin mpro_apo_dimer_prod_aligned_dry_2.nc
+trajin mpro_apo_dimer_prod_aligned_dry_3.nc
+
+vector center :7-198@N,CA,C,O out cpptraj_cluster_output/mpro_apo_dimer_com.dat
+
+cluster C0_RMS_All \
+ kmeans clusters 10 randompoint maxit 1000 \
+ rms :1-612@CA&!@H= \
+ sieve 10 random \
+ out cpptraj_cluster_output/cnuvtime.dat \
+ summary cpptraj_cluster_output/summary.dat \
+ info cpptraj_cluster_output/info.dat \
+ cpopvtime cpptraj_cluster_output/cpopvtime.agr normframe \
+ repout cpptraj_cluster_output/rep repfmt pdb \
+ singlerepout cpptraj_cluster_output/singlerep.nc singlerepfmt netcdf \
+ avgout cpptraj_cluster_output/avg avgfmt pdb
+run
+EOF
+
+module load amber
+cpptraj -i cluster_povme_test.cpptraj
+wait
+
+module load conda
+pdb_mkensemble cpptraj_cluster_output/rep* > mpro_apo_dimer_cluster_10.pdb
+
+
+awk '{total += $2} END { print total/NR }' cpptraj_cluster_output/mpro_apo_dimer_com.dat > cpptraj_cluster_output/avg_com.txt
+awk '{total += $3} END { print total/NR }' cpptraj_cluster_output/mpro_apo_dimer_com.dat >> cpptraj_cluster_output/avg_com.txt
+awk '{total += $4} END { print total/NR }' cpptraj_cluster_output/mpro_apo_dimer_com.dat >> cpptraj_cluster_output/avg_com.txt
+
+head cpptraj_cluster_output/avg_com.txt
+
+
+

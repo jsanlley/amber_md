@@ -24,7 +24,7 @@ cat > rheat.mdin << EOF
   gamma_ln=5.0, ! collision frequency (pg. 347)
   ntr=1, ! flag for applying potential harmonic restraints (for restrained systems) (p.343)
   restraint_wt=5.0, ! restraint weight (p.344)
-  restraintmask=':1-306', ! specifies restrained atoms in system (p.344)
+  restraintmask=':1-306 & :307', ! specifies restrained atoms in system (p.344)
 /
 EOF
 
@@ -46,7 +46,7 @@ cat > heat.mdin << EOF
   dt=0.002, ! timestep in picoseconds (p.344)
   cut=10.0, ! nonbonded cutoff in Å (p.360)
   iwrap=1
-  tempi=0,
+  tempi=310.0,
   temp0=310.0, ! reference temperature at which the system is kept (p.346)
   ntt=3, ! temperature regulation method in thermostat scheme (Langevin) (p.345)
   gamma_ln=5.0, ! collision frequency (pg. 347)

@@ -14,10 +14,11 @@ syspath=$PWD
 for replica in 1 2 3
 do
 	cd $syspath/$1/prod/$replica
+	
 	pwd
-	#head *slurm
-	. ~/scripts/amber_md/run_combine_prod.sh $1 $2 $replica
-	#head *slurm
+	
+	. ~/scripts/amber_md/cpptraj_scripts/calc_rmsf_all.cpptraj $1 $2 $replica
+
 done
 
 cd $syspath

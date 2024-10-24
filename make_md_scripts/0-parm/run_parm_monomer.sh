@@ -4,11 +4,14 @@
 # # of salts for dimeric system = ~64
 
 #If parametrizing a small molecule, make script to run antechamber on pdb file of molecule (extracted from final structure)
+
+#if charge != 0, then change -nc flag
+
 cat > run_antechamber.sh << EOF
 #!/bin/bash
 
 echo 'Running antechamber...'
-antechamber -i $2.pdb -fi pdb -o $2.mol2 -fo mol2 -c bcc -s 0
+antechamber -i $2.pdb -fi pdb -o $2.mol2 -fo mol2 -c bcc -s 0 -nc 0
 wait
 
 echo 'Running parmchk2...'
@@ -46,7 +49,7 @@ loadamberparams $2.frcmod
 loadoff $2.lib
 
 MPRO = loadpdb $1.pdb
-solvateoct MPRO TIP3PBOX 10 iso
+solvateoct MPRO OPCBOX 10 iso
 
 addionsrand MPRO Na+ 52 Cl- 52           #0.150M salt conc.
 addionsrand MPRO Na+ 4
@@ -63,10 +66,10 @@ EOF
 module load amber
 
 #run parm
-. run_antecchamber.sh
+#. run_antecchamber.sh
 tleap -f tleap_parm.in
 tleap -f tleap_???_*
 rm leap.log
 
 #remove scripts
-rm tleap*
+#rm tleap*

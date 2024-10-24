@@ -25,7 +25,7 @@ cat > cleanup.sh << EOF
 mkdir prod
 
 mkdir prod/1
-mv prod.mdin prod/1
+mv *prod.* prod/1
 cp *prmtop prod/1
 cp *_equil.rst prod/1
 
