@@ -7,7 +7,7 @@
 
 syspath=$PWD
 
-#for a give system define the state (monomer, dimer, dimer_asym)
+#for a given system define the state (monomer, dimer, dimer_asym)
 #go into each of the replica files
 #run the combine_prod.cpptraj script to create dry trajectories to check up to 500ns dry
 
