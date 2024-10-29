@@ -118,6 +118,15 @@ pmemd.cuda -O -i prod.mdin -o mpro_fhr_monomer_prod1.mdout -p mpro_fhr_monomer_s
 
 For the first 250ns, only the first line will be run. In order to continue, comment out the first line and remove the # from the second line (this will begin the second run).
 
+# 8. To process individual 250ns trajecotries (lets say that you only want to see the first 250 run), run the process_prod.cpptraj command using cpptraj by running the following command.
+
+cpptraj -i process_prod.cpptraj
+
+# 9. If you would like to combine trajectories, run the 4-combine_prod.sh script from the desired replica file and feel free to delete the trajin lines that you will need (This script assumes you ran 4 production runs).
+
+cd prod/1
+. ~/amber_md/protein_ligand_complex/4-comine_prod.sh $1 (system name) $2 (number of residues in the system excluding ligand) 
+
 # Simulation specs:
 
 	Periodic boundary conditions for a system within a truncated octahedron geometry.
