@@ -255,7 +255,7 @@ cat > prep/equil/requil.mdin << EOF
   iwrap = 1, ! re-center atoms (p. 369 amber 22)
   barostat=1, ! Berendsen thermostat (p.348)
   cut=10.0, ! nonbonded cutoff in Å (p.360)
-  nstlim=125000, ! 250ps number of MD steps to be performed (p.344)
+  nstlim=250000, ! 500ps number of MD steps to be performed (p.344)
   ntpr=25000, ! 50ps write to mdout and mdinfo files (p.342)
   nscm=1000, ! removal of transaltional and rotational center of mass (p. 344)
   ntwx=25000, ! 50ps write coordinates to nc file (p.342)
@@ -283,7 +283,7 @@ cat > prep/equil/equil.mdin << EOF
   iwrap = 1, ! re-center atoms (p. 369 amber 22)
   barostat=1, ! Berendsen thermostat (p.348)
   cut=10.0, ! nonbonded cutoff in Å (p.360)
-  nstlim=125000, ! 250ps number of MD steps to be performed (p.344)
+  nstlim=250000, ! 500ps number of MD steps to be performed (p.344)
   ntpr=2500, ! 5ps write to mdout and mdinfo files (p.342)
   nscm=1000, ! removal of transaltional and rotational center of mass (p. 344)
   ntwx=2500, ! 5ps write coordinates to nc file (p.342)
@@ -313,9 +313,24 @@ cp *solvated.prmtop ../../prod/1
 ambpdb -p $3_solvated.prmtop -c $3_equil.rst > $3_equilibrated.pdb
 
 # Run analysis script to check equilibration
+cpptraj -i process_equil.cpptraj
 # TBD
 
 EOF
+
+#make cpptraj script to align and visualize equilibration run
+cat > prep/equil/process_equil.cpptraj << EOF
+parm $3_solvated.prmtop
+trajin $3_equil.nc
+
+autoimage
+rms fit :1-$1@CA
+
+trajout $3_equil_aligned.nc
+trajout $3_equilibrated.pdb pdb onlyframes 50 50 1
+EOF
+
+
 
 # Make prod files
 mkdir prod
@@ -344,10 +359,10 @@ cat > prod/1/prod.mdin << EOF
   barostat=1, ! Berendsen thermostat (p.348)
   cut=10.0, ! nonbonded cutoff in Å (p.360)
   nstlim=125000000, ! 250ns number of MD steps to be performed (p.344)
-  ntpr=50000, ! 250ps write 2500 frames to mdout and mdinfo files (p.342)
+  ntpr=250000, !  500ps resolution to mdout/mdinfo (500 steps)  (p.342)
   nscm=1000, ! removal of transaltional and rotational center of mass (p. 344)
-  ntwx=50000, ! 250ps write 2500 frames coordinates to nc file (p.342)
-  ntwr=50000, ! 250ps write 2500 frames rst file
+  ntwx=50000, ! 100ps/frame resolution to traj (2,500 frames) (p.342)
+  ntwr=50000, !  100ps/frame resolution to rst (2,500 frames) 
 /
 EOF
 
@@ -387,5 +402,16 @@ pmemd.cuda -O -i prod.mdin -o $3_prod1.mdout -p $3_solvated.prmtop -c $3_equil.r
 #pmemd.cuda -O -i prod.mdin -o $3_prod2.mdout -p $3_solvated.prmtop -c $3_prod1.rst -r $3_prod2.rst -ref $3_prod1.rst -inf $3_prod2.info -x $3_prod2.nc
 #pmemd.cuda -O -i prod.mdin -o $3_prod3.mdout -p $3_solvated.prmtop -c $3_prod2.rst -r $3_prod3.rst -ref $3_prod2.rst -inf $3_prod3.info -x $3_prod3.nc
 #pmemd.cuda -O -i prod.mdin -o $3_prod4.mdout -p $3_solvated.prmtop -c $3_prod3.rst -r $3_prod4.rst -ref $3_prod3.rst -inf $3_prod4.info -x $3_prod4.nc
+EOF
+
+# Make cpptraj script to align and visualize individual production run (per 250ns)
+cat > prod/1/process_prod.cpptraj << EOF
+parm $3_solvated.prmtop
+trajin $3_prod1.nc 1 last 10
+
+autoimage
+rms fit :1-$1@CA
+
+trajout $3_prod_aligned.nc
 EOF
 
