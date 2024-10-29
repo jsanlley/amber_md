@@ -21,6 +21,32 @@
 		# For ligand (gaff)
 		# For protein (ff19SB)
 
-# Run the run_prep.sh script to build the solvated system to be used for MD simulations. This script will generate the protein-ligand complex using the previously created parameter files inside a truncated octahedron with a 10Å cutoff from the protein. The number of salt atoms will have to be calculated manually and may vary across systems.
+# Simulation specs:
+
+	Periodic boundary conditions for a system within a truncated octahedron geometry.
+ 	SHAKE algorithm applied to constrain hydrogen bonds when applicable. (cite)
+  	2fs timestep between frames.
+   	10A cutoff for nonbonded interactions.
+    	Target heating temperature to 310K.
+     	Salt concentrations adjusted to match experimental concentrations (0.150M NaCl).
+      	Constant volume applied for heating simulations (NVT).
+       	Constant pressure applied for equilibration and production simulations (NPT). 
+   
+  	
+
+	1. Minimization
+ 	2. Heating (250ps + 250ps of restrained and unrestrained runs) = 50 frames/run
+  	3. Equilibration (500ps + 500ps of restrained and unrestrained runs) = 100 frames/run (unprocessed)
+   	4. Production (250ns) = 2500 frames/run (unprocessed) at a 100ps/frame resolution (unprocessed)
+
+ # Resolution of post-processed trajectories (as defined in cpptraj scritps)
+
+ Equilibration: 100 frames (5ps/frame)
+ Production: 250 frames (1ns/frame)
+ 
+
+# How to use these scripts
+
+	Run the run_prep.sh script to build the solvated system to be used for MD simulations. This script will generate the protein-ligand complex using the previously created parameter files inside a truncated octahedron with a 10Å cutoff from the protein. The number of salt atoms will have to be calculated manually and may vary across systems.
 
 
