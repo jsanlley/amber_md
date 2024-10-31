@@ -1,0 +1,17 @@
+#load protein force field
+source leaprc.protein.ff19SB
+
+#load prepin file for capped amino acid residue
+loadamberprep nirm_capped.prepin
+
+#load frcmod files for protein and small molecule force fields
+loadamberparams nirm_capped_ff19SB.frcmod
+loadamberparams nirm_capped_gaff.frcmod
+
+#load pdb file
+pdb = loadpdb mpro_nirm_monomer.pdb
+
+#check pdb file
+check pdb
+
+quit
