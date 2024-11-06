@@ -127,7 +127,6 @@ pmemd.cuda -O -i min4.mdin -o $3_min4.mdout -p $3_solvated.prmtop -c $3_min3.rst
 
 echo 'Running minimization 5/5'
 pmemd.cuda -O -i min5.mdin -o $3_min5.mdout -p $3_solvated.prmtop -c $3_min4.rst -r $3_min5.rst -ref $3_min4.rst -inf $3_min5.info
-wait
 
 # Copy necessary files to heating directory
 cp *solvated.prmtop ../heat 
@@ -213,7 +212,6 @@ pmemd.cuda -O -i rheat.mdin -o $3_rheat.mdout -p $3_solvated.prmtop -c $3_min5.r
 
 echo 'Running heat'
 pmemd.cuda -O -i heat.mdin -o $3_heat.mdout -p $3_solvated.prmtop -c $3_rheat.rst -r $3_heat.rst -ref $3_rheat.rst -inf $3_heat.info -x $3_heat.nc
-wait
 
 # Copy necessary files to the equilibration directory
 cp *solvated.prmtop ../equil
@@ -302,8 +300,6 @@ pmemd.cuda -O -i requil.mdin -o $3_requil.mdout -p $3_solvated.prmtop -c $3_heat
 
 echo 'Running equil'
 pmemd.cuda -O -i equil.mdin -o $3_equil.mdout -p $3_solvated.prmtop -c $3_requil.rst -r $3_equil.rst -ref $3_requil.rst -inf $3_equil.info -x $3_equil.nc
-
-wait
 
 # Copy restart file from equilibration to production directory
 cp *_equil.rst ../../prod/1
