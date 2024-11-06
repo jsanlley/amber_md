@@ -10,13 +10,30 @@
 # protein=$1
 # ligand=$2
 
-# Navigate to appropriate directory
-cd parm/tleap
 
-# Load necessary modules
-module load amber
+# Copy protein file to tleap directory
+cp $1.pdb parm/tleap
 
-# Run tleap
-tleap -f solvate_tleap.in
-wait
+cat > parm/tleap/solvate_tleap.in << EOF
+source leaprc.gaff
+source leaprc.water.opc
+source leaprc.protein.ff19SB
+
+
+loadamberparams $2.frcmod
+loadoff $2.lib
+
+pdb = loadpdb $1.pdb
+solvateoct pdb OPCBOX 10 iso
+
+addionsrand pdb Na+ 53 Cl- 53           #0.150M salt conc.
+addionsrand pdb Na+ 4
+
+saveoff pdb $1_solvated.lib                     #save off files
+saveamberparm pdb $1_solvated.prmtop $1_solvated.inpcrd       #save parm
+savepdb pdb $1_solvated.pdb                           #save pdb
+
+check pdb
+quit
+EOF
 
