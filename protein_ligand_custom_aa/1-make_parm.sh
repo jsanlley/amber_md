@@ -10,7 +10,7 @@ mkdir parm/antechamber
 mkdir parm/tleap
 
 # Make template .mc file
-cat > parm/antechamber/$1.mc << EOF
+cat > parm/antechamber/$1_capped.mc << EOF
 HEAD_NAME N
 TAIL_NAME C
 MAIN_CHAIN CA
@@ -43,6 +43,12 @@ cat > parm/antechamber/run_parm.sh << EOF
 #!/bin/bash
 
 # Run antechamber on capped ligand pdb file
+module load amber
+
+# Remove conect records from ligand file
+grep -v "CONECT" $1_capped.pdb > $1_capped_clean.pdb
+mv $1_capped_clean.pdb $1_capped.pdb
+
 echo 'Running antechamber...'
 antechamber -fi pdb -fo ac -i $1_capped.pdb -o $1_capped.ac -at amber -rn $1 -nc $3 -c bcc
 wait
@@ -59,7 +65,7 @@ prepgen -i $1_capped.ac -o $1_capped.prepin -m $1_capped.mc -rn $1
 
 # Create .frcmod files (gaff and ff19SB)
 parmchk2 -i $1_capped.ac -f ac -o $1_capped_gaff.frcmod
-parmchk2 -i $1_capped.ac -f ac -o $1_capped_ff19SB.frcmod -a Y -p $AMBERHOME/dat/leap/parm/parm19.dat
+parmchk2 -i $1_capped.ac -f ac -o $1_capped_ff19SB.frcmod -a Y -p $AMBERHOME/dat/leap/parm/parm10.dat
 
 # Copy frcmod and prepin files to tleap directory
 cp *frcmod* ../tleap
@@ -98,7 +104,6 @@ echo "Protein: " $2
 
 # Copy files to parm/antechamber folder
 cp $1_capped.pdb parm/antechamber
-cp $1_capped.mc parm/antechamber
 
 cp $2.pdb parm/tleap
 
