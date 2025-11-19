@@ -1,0 +1,1 @@
+"${SCHRODINGER}/utilities/prepwizard" maestro_proteinprep_2.maegz maestro_proteinprep_2-out.maegz -fillsidechains -disulfides -assign_all_residues -rehtreat -max_states 1 -epik_pH 7.4 -epik_pHt 0.0 -antibody_cdr_scheme Kabat -samplewater -propka_pH 7.4 -f S-OPLS -rmsd 0.3 -watdist 8 -JOBNAME maestro_proteinprep_2 -HOST localhost:4
