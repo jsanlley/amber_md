@@ -1,0 +1,5 @@
+parm mpro_ens_monomer_dry.prmtop 				#load topology
+trajin mpro_ens_monomer_prod_aligned_dry_1.nc 1 last 100 	#load trajectory, change  <start> last <offset>
+autoimage				#align
+strip :WAT,Cl-,Na+			#dry (optional)
+trajout mpro_ens_monomer_combined.pdb pdb 			#output dry pdb from sliced traj

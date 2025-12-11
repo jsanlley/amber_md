@@ -1,0 +1,4 @@
+parm mpro_nat_monomer_dry_3_5k-at-500ps.prmtop
+trajin mpro_nat_monomer_aligned_dry_3_5k-at-500ps.nc 1 last #dry trajectory for wisp analysis
+strip :306-316,NME,ACE nobox parmout /net/gpfs-amarolab/jsanlleyhernandez/mpro-connecting-data/mpro_trajectories/mpro_nat_stripped/mpro_nat_monomer/mpro_nat_monomer_stripped.prmtop # if state==monomer
+trajout mpro_nat_monomer_stripped_3.nc
