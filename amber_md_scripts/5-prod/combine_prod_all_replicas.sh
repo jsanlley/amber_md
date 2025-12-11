@@ -16,7 +16,7 @@ do
 	cd $syspath/$1/prod/$replica
 	pwd
 	#head *slurm
-	. ~/scripts/amber_md/run_combine_prod.sh $1 $2 $replica
+	. ~/scripts/amber_md/prod/run_combine_prod.sh $1 $2 $replica
 	#head *slurm
 done
 

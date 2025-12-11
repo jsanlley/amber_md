@@ -1,0 +1,10 @@
+    #Run unrestrained minimization
+    &cntrl
+    imin=1, ! flag to run md or minimization (p.340)
+    ntx=1, ! option to read initial coordinates (p.341)
+    irest=0 ! flag to restart a simulation anew or from a previous run (p.341)
+    ntpr=50, ! write to mdout and mdinfo files (p.342)
+    maxcyc=40000, ! minimum number of minimizaion cycles (p.344)
+    ntmin=1, ! flag for the method of minimization (p.344)
+    ! ncyc=2000, switching from steepest descent to conjugate gradient (p.344)
+    /

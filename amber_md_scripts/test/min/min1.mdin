@@ -1,0 +1,13 @@
+    #strong minimization on non hydrogen atoms
+    &cntrl
+    imin=1, ! flag to run md or minimization (p.340)
+    ntx=1,  ! option to read initial coordinates (p.341)
+    irest=0 ! flag to restart a simulation anew or from a previous run (p.341)
+    ntpr=50, ! write to mdout and mdinfo files (p.342)
+    ntr=1, ! flag for applying potential harmonic restraints (for restrained systems) (p.343)
+    restraint_wt=100.0, ! kcal/mol restraint weight (p.344)
+    restraintmask='!@H=', ! strong restraint on all non-hydrogen atoms (p.344)
+    maxcyc=500, ! minimum number of minimizaion cycles (p.344)
+    ntmin=1, ! flag for the method of minimization (p.344)
+    ncyc=500, ! switching from steepest descent to conjugate gradient (p.344)
+    /
