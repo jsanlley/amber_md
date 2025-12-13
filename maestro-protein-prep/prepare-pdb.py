@@ -10,7 +10,7 @@ def check_pdb(st):
     for chain in st.chain:
         print(f"Chain object: {chain.name} \nchain.residue {chain.residue}")
         print(chain.getAtomIndices())
-        for res in chain.residue: 
+        for res in chain.residue:
             print(f"residue {res}")
         #print(f"Chain: {st.chain} ({len(res)} residues)")
 
