@@ -1,0 +1,22 @@
+Equilibration (NPT, 10ns constant pressure simulation)
+ &cntrl
+  imin=0, ! flag to run md or minimization (p.340)
+  ntx=5,   ! option to read initial coordinates (p.341),
+  irest=0,! flag to restart a simulation anew or from a previous run (p.341)
+  ntt=3, ! temperature regulation method in thermostat scheme (Langevin) (p.345)
+  temp0=310.0,! reference temperature at which the system is kept (p.346)
+  gamma_ln=5.0, ! collision frequency (pg. 347)
+  dt=0.002, ! timestep in picoseconds (p.344)
+  ntc=2, ! apply bond constraints using SHAKE (p. 349)
+  ntf=2, ! force evaluation if SHAKE is not used (p. 360)
+  ntb=2,  ! apply periodic boundary conditions to non-bonded int (p.360)
+  ntp=1,  ! constant pressure dynamics (p.348)
+  iwrap = 1 ! re-center atoms (p. 369 amber 22)
+  barostat=1, ! Berendsen thermostat (p.348)
+  cut=10.0, ! nonbonded cutoff in Å (p.360)
+  nstlim=5000000, ! number of MD steps to be performed (p.344)
+  ntpr=12500, ! write to mdout and mdinfo files (p.342)
+  nscm=1000, ! removal of transaltional and rotational center of mass (p. 344)
+  ntwx=12500, ! write coordinates to nc file (p.342)
+  ntwr=12500, ! write to rst file
+/

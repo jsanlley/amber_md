@@ -1,0 +1,10 @@
+source leaprc.gaff
+source leaprc.water.tip3p
+source leaprc.protein.ff14SB
+
+
+loadamberparams nirm.frcmod
+loadoff nirm.lib
+
+MPRO = loadpdb mpro_nirm_prepared.pdb
+check MPRO
