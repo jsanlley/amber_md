@@ -1,7 +1,11 @@
 #!/bin/bash
 
+# 1 pdb name
+# 2 heat/equil
+
+
 #make cpptraj script to align and visualize equilibration run
-cat > process_equil.cpptraj << EOF
+cat > analyze-traj.cpptraj << EOF
 parm $1_solvated.prmtop
 trajin $1_equil.nc
 

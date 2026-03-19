@@ -32,7 +32,6 @@ def check_pdb(st): # done (as much as it can)
             elif seq_str[-5:] != 'GVTFQ':
                 pass
         print(f"Chain {chain.name}: Sequence: {seq_str if len(seq) < 300 else ''} ({len(seq)} residues)) ({len(waters)} waters) ({solvent} solvent)")
-
 def remove_solvents(st): # done 
     solvents = ["DMS","GOL"]
     solvent_atoms = [] 

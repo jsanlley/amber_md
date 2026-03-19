@@ -5,16 +5,16 @@
 # add solvated and equilibrated structures to pdb directory (so theyre all in the same place)
 
 # define state (monomer,dimer,dimer_asym) to define variables for .mdin files
-state=$2
+state=$1
 if [ $state == 'monomer' ]; then
     restraint=':1-306'
-    ligand=':307-320' # double check that the peptides are in fact 10
+    ligand=':307-317' # double check that the peptides are in fact 10
 elif [ $state == 'dimer_asym' ]; then
     restraint=':1-612'
-    ligand=':613-625'
+    ligand=':613-623'
 else
     restraint=':1-612'
-    ligand=':613-638'
+    ligand=':613-633'
 fi
 echo $state $restraint $ligand
 
@@ -111,11 +111,11 @@ EOF
     #!/bin/bash
     module load amber
 
-    pmemd.cuda -O -i min1.mdin -o $1_min1.mdout -p ../../$1_solvated.prmtop -c ../../$1_solvated.inpcrd -r $1_min1.rst -ref ../../$1_solvated.inpcrd -inf $1_min1.info
-    pmemd.cuda -O -i min2.mdin -o $1_min2.mdout -p ../../$1_solvated.prmtop -c $1_min1.rst -r $1_min2.rst -ref $1_min1.rst -inf $1_min2.info 
-    pmemd.cuda -O -i min3.mdin -o $1_min3.mdout -p ../../$1_solvated.prmtop -c $1_min2.rst -r $1_min3.rst -ref $1_min2.rst -inf $1_min3.info
-    pmemd.cuda -O -i min4.mdin -o $1_min4.mdout -p ../../$1_solvated.prmtop -c $1_min3.rst -r $1_min4.rst -ref $1_min3.rst -inf $1_min4.info
-    pmemd.cuda -O -i min5.mdin -o $1_min5.mdout -p ../../$1_solvated.prmtop -c $1_min4.rst -r $1_min5.rst -ref $1_min4.rst -inf $1_min5.info
+    pmemd.cuda -O -i min1.mdin -o $1_min1.mdout -p $1_solvated.prmtop -c $1_solvated.inpcrd -r $1_min1.rst -ref $1_solvated.inpcrd -inf $1_min1.info
+    pmemd.cuda -O -i min2.mdin -o $1_min2.mdout -p $1_solvated.prmtop -c $1_min1.rst -r $1_min2.rst -ref $1_min1.rst -inf $1_min2.info 
+    pmemd.cuda -O -i min3.mdin -o $1_min3.mdout -p $1_solvated.prmtop -c $1_min2.rst -r $1_min3.rst -ref $1_min2.rst -inf $1_min3.info
+    pmemd.cuda -O -i min4.mdin -o $1_min4.mdout -p $1_solvated.prmtop -c $1_min3.rst -r $1_min4.rst -ref $1_min3.rst -inf $1_min4.info
+    pmemd.cuda -O -i min5.mdin -o $1_min5.mdout -p $1_solvated.prmtop -c $1_min4.rst -r $1_min5.rst -ref $1_min4.rst -inf $1_min5.info
 EOF
 fi
 
@@ -185,10 +185,10 @@ EOF
     module load amber
 
     echo 'Running rheat'
-    pmemd.cuda -O -i rheat.mdin -o $1_rheat.mdout -p ../../$1_solvated.prmtop -c ../min/$1_min5.rst -r $1_rheat.rst -ref ../min/$1_min5.rst -inf $1_rheat.info -x $1_rheat.nc
+    pmemd.cuda -O -i rheat.mdin -o $1_rheat.mdout -p $1_solvated.prmtop -c $1_min5.rst -r $1_rheat.rst -ref $1_min5.rst -inf $1_rheat.info -x $1_rheat.nc
 
     echo 'Running heat'
-    pmemd.cuda -O -i heat.mdin -o $1_heat.mdout -p ../../$1_solvated.prmtop -c $1_rheat.rst -r $1_heat.rst -ref $1_rheat.rst -inf $1_heat.info -x $1_heat.nc
+    pmemd.cuda -O -i heat.mdin -o $1_heat.mdout -p $1_solvated.prmtop -c $1_rheat.rst -r $1_heat.rst -ref $1_rheat.rst -inf $1_heat.info -x $1_heat.nc
 EOF
 
 fi
@@ -260,10 +260,10 @@ EOF
     module load amber
 
     echo 'Running requil'
-    pmemd.cuda -O -i requil.mdin -o $1_requil.mdout -p ../../$1_solvated.prmtop -c ../heat/$1_heat.rst -r $1_requil.rst -ref ../heat/$1_heat.rst -inf $1_requil.info -x $1_requil.nc
+    pmemd.cuda -O -i requil.mdin -o $1_requil.mdout -p $1_solvated.prmtop -c $1_heat.rst -r $1_requil.rst -ref $1_heat.rst -inf $1_requil.info -x $1_requil.nc
 
     echo 'Running equil'
-    pmemd.cuda -O -i equil.mdin -o $1_equil.mdout -p ../../$1_solvated.prmtop -c $1_requil.rst -r $1_equil.rst -ref $1_requil.rst -inf $1_equil.info -x $1_equil.nc
+    pmemd.cuda -O -i equil.mdin -o $1_equil.mdout -p $1_solvated.prmtop -c $1_requil.rst -r $1_equil.rst -ref $1_requil.rst -inf $1_equil.info -x $1_equil.nc
 EOF
 fi
 
@@ -303,13 +303,13 @@ EOF
     #!/bin/bash
     module load amber
 
-    pmemd.cuda -O -i prod.mdin -o $1_prod1.mdout -p ../../../$1_solvated.prmtop -c ../../equil/$1_equil.rst -r $1_prod1.rst -ref ../../equil/$1_equil.rst -inf $1_prod1.info -x $1_prod1.nc
-    #pmemd.cuda -O -i prod.mdin -o $1_prod2.mdout -p ../../../$1_solvated.prmtop -c $1_prod1.rst -r $1_prod2.rst -ref $1_prod1.rst -inf $1_prod2.info -x $1_prod2.nc
-    #pmemd.cuda -O -i prod.mdin -o $1_prod3.mdout -p ../../../$1_solvated.prmtop -c $1_prod2.rst -r $1_prod3.rst -ref $1_prod2.rst -inf $1_prod3.info -x $1_prod3.nc
-    #pmemd.cuda -O -i prod.mdin -o $1_prod4.mdout -p ../../../$1_solvated.prmtop -c $1_prod3.rst -r $1_prod4.rst -ref $1_prod3.rst -inf $1_prod4.info -x $1_prod4.nc
+    pmemd.cuda -O -i prod.mdin -o $1_prod1.mdout -p $1_solvated.prmtop -c $1_equil.rst -r $1_prod1.rst -ref $1_equil.rst -inf $1_prod1.info -x $1_prod1.nc
+    #pmemd.cuda -O -i prod.mdin -o $1_prod2.mdout -p $1_solvated.prmtop -c $1_prod1.rst -r $1_prod2.rst -ref $1_prod1.rst -inf $1_prod2.info -x $1_prod2.nc
+    #pmemd.cuda -O -i prod.mdin -o $1_prod3.mdout -p $1_solvated.prmtop -c $1_prod2.rst -r $1_prod3.rst -ref $1_prod2.rst -inf $1_prod3.info -x $1_prod3.nc
+    #pmemd.cuda -O -i prod.mdin -o $1_prod4.mdout -p $1_solvated.prmtop -c $1_prod3.rst -r $1_prod4.rst -ref $1_prod3.rst -inf $1_prod4.info -x $1_prod4.nc
 EOF
 
-    cat > prod/1/run_prod.slurm << EOF
+    cat > run_prod.slurm << EOF
     #!/bin/bash
     #SBATCH --job-name=$2_0_0
     #SBATCH --output=$1_prod_rep_run_abv_%j.out
@@ -329,10 +329,10 @@ EOF
     source $HOME/.bashrc
     conda activate amber
 
-    pmemd.cuda -O -i prod.mdin -o $1_prod1.mdout -p ../../../$1_solvated.prmtop -c ../../equil/$1_equil.rst -r $1_prod1.rst -ref ../../equil/$1_equil.rst -inf $1_prod1.info -x $1_prod1.nc
-    #pmemd.cuda -O -i prod.mdin -o $1_prod2.mdout -p ../../../$1_solvated.prmtop -c $1_prod1.rst -r $1_prod2.rst -ref $1_prod1.rst -inf $1_prod2.info -x $1_prod2.nc
-    #pmemd.cuda -O -i prod.mdin -o $1_prod3.mdout -p ../../../$1_solvated.prmtop -c $1_prod2.rst -r $1_prod3.rst -ref $1_prod2.rst -inf $1_prod3.info -x $1_prod3.nc
-    #pmemd.cuda -O -i prod.mdin -o $1_prod4.mdout -p ../../../$1_solvated.prmtop -c $1_prod3.rst -r $1_prod4.rst -ref $1_prod3.rst -inf $1_prod4.info -x $1_prod4.nc
+    pmemd.cuda -O -i prod.mdin -o $1_prod1.mdout -p $1_solvated.prmtop -c $1_equil.rst -r $1_prod1.rst -ref $1_equil.rst -inf $1_prod1.info -x $1_prod1.nc
+    #pmemd.cuda -O -i prod.mdin -o $1_prod2.mdout -p $1_solvated.prmtop -c $1_prod1.rst -r $1_prod2.rst -ref $1_prod1.rst -inf $1_prod2.info -x $1_prod2.nc
+    #pmemd.cuda -O -i prod.mdin -o $1_prod3.mdout -p $1_solvated.prmtop -c $1_prod2.rst -r $1_prod3.rst -ref $1_prod2.rst -inf $1_prod3.info -x $1_prod3.nc
+    #pmemd.cuda -O -i prod.mdin -o $1_prod4.mdout -p $1_solvated.prmtop -c $1_prod3.rst -r $1_prod4.rst -ref $1_prod3.rst -inf $1_prod4.info -x $1_prod4.nc
 EOF
 fi
 
