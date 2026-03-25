@@ -13,7 +13,7 @@ else
 fi
 
 #Prepare ligand-bound model
-cat > tleap_apo_$state.in << EOF
+cat <<EOF > tleap_apo_$state.in
 source leaprc.gaff
 source leaprc.water.opc
 source leaprc.protein.ff19SB
@@ -42,3 +42,4 @@ EOF
 #rm tleap_*
 
 echo 'done'
+save

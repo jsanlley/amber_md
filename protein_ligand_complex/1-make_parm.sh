@@ -7,15 +7,13 @@ charge=$2
 
 # Make antechamber and tleap directories
 mkdir parm
-mkdir parm/antechamber
-mkdir parm/tleap
 
 # RUN_PARM.SH
 
 # Write a script that will run antechamber and parmchk2 to produce the nessary files required by tleap to describe the ligand. Antechamber will calculate the partial charges of the ligand using semi-empirical QM calculations (bcc). 
 #IMPORTANT: The charge of your ligand may vary and may need to be redefined in the -nc flag of the antechamber command
 
-cat > parm/antechamber/run_parm.sh << EOF
+cat > parm/run_parm.sh << EOF
 #!/bin/bash
 
 echo 'Running antechamber...'
@@ -33,13 +31,13 @@ EOF
 
 #NOTE: The files produced for this ligand (.frcmod, .lib) can be reused to build model systems containing this molecule as long as the residue has the same name and number of atoms.
 
-cat > parm/tleap/parm_tleap.in << EOF
+cat > parm/parm_tleap.in << EOF
 source leaprc.protein.ff19SB
 source leaprc.gaff
 
 loadamberparams $ligand.frcmod
 $ligand = loadmol2 $ligand.mol2
-check
+check $ligand
 saveoff $ligand $ligand.lib
 saveamberparm $ligand $ligand.prmtop $ligand.inpcrd
 quit

@@ -12,13 +12,10 @@
 
 
 # Copy protein file to tleap directory
-cp $1.pdb parm/tleap
-
-cat > parm/tleap/solvate_tleap.in << EOF
+cat > solvate_tleap.in << EOF
 source leaprc.gaff
-source leaprc.water.opc
 source leaprc.protein.ff19SB
-
+source leaprc.water.opc
 
 loadamberparams $2.frcmod
 loadoff $2.lib

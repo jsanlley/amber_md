@@ -12,10 +12,17 @@ if [ $state == 'monomer' ]; then
 elif [ $state == 'dimer_asym' ]; then
     restraint=':1-612'
     ligand=':613-625'
-else
+elif [ $state == 'aponat_monomer' ]; then
+    restraint=':7-312'
+    ligand=':1-6,313-318'
+elif [ $state == 'aponat_dimer' ]; then
+    restraint=':7-312,325-630'
+    ligand=':1-6,313-318,319-324,631-636'
+else 
     restraint=':1-612'
     ligand=':613-638'
 fi
+
 echo $state $restraint $ligand
 
 # MINIMIZATION
@@ -323,7 +330,7 @@ EOF
     #SBATCH --gpu-bind=closest
     #SBATCH --account=kif-delta-gpu
     #SBATCH --no-requeue
-    #SBATCH -t 42:00:00
+    #SBATCH -t 30:00:00
 
     set -xv
     source $HOME/.bashrc
