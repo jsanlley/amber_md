@@ -39,7 +39,7 @@ quit
 EOF
 
 #Prepare ligand-bound model
-cat > tleap_$2_monomer.in << EOF
+cat > tleap_$2_.in << EOF
 source leaprc.gaff
 source leaprc.water.opc
 source leaprc.protein.ff19SB
@@ -51,8 +51,8 @@ loadoff $2.lib
 MPRO = loadpdb $1.pdb
 solvateoct MPRO OPCBOX 10 iso
 
-addionsrand MPRO Na+ 52 Cl- 52           #0.150M salt conc.
-addionsrand MPRO Na+ 4
+addionsrand MPRO Na+ 50 Cl- 50           #0.150M salt conc.
+addionsrand MPRO Na+ 0
 
 saveoff MPRO $1_solvated.lib                     #save off files
 saveamberparm MPRO $1_solvated.prmtop $1_solvated.inpcrd       #save parm
@@ -61,15 +61,6 @@ savepdb MPRO $1_solvated.pdb                           #save pdb
 
 quit
 EOF
-
-#load amber
-module load amber
-
-#run parm
-#. run_antecchamber.sh
-tleap -f tleap_parm.in
-tleap -f tleap_???_*
-rm leap.log
 
 #remove scripts
 #rm tleap*

@@ -90,7 +90,7 @@ EOF
     ntpr=50, ! write to mdout and mdinfo files (p.342)
     ntr=1, ! flag for applying potential harmonic restraints (for restrained systems) (p.343)
     restraint_wt=10.0, ! kcal/mol restraint weight (p.344)
-    restraintmask='$ligand & !@H=', ! soft restraint on all non-hydrogen atoms (p.344)
+    restraintmask=':$ligand & !@H=', ! soft restraint on all non-hydrogen atoms (p.344)
     maxcyc=500, ! minimum number of minimizaion cycles (p.344)
     ntmin=1, ! flag for the method of minimization (p.344)
     ncyc=500, ! switching from steepest descent to conjugate gradient (p.344)
@@ -155,7 +155,7 @@ else
     gamma_ln=5.0, ! collision frequency (pg. 347)
     ntr=1, ! flag for applying potential harmonic restraints (for restrained systems) (p.343)
     restraint_wt=5.0, ! restraint weight (p.344)
-    restraintmask='$restraint & $ligand', ! specifies restrained atoms in system (p.344)
+    restraintmask='$restraint & :$ligand', ! specifies restrained atoms in system (p.344)
     /
 EOF
 
@@ -229,7 +229,7 @@ else
     ntwr=25000, ! 50ps write to rst file
     ntr=1, ! flag for applying potential harmonic restraints (for restrained systems) (p.343)
     restraint_wt=5.0, ! restraint weight (p.344)
-    restraintmask='$restraint & $ligand', ! specifies restrained atoms in system (p.344)
+    restraintmask='$restraint & :$ligand', ! specifies restrained atoms in system (p.344)
     /
 EOF
 
@@ -269,6 +269,17 @@ EOF
 
     echo 'Running equil'
     pmemd.cuda -O -i equil.mdin -o $1_equil.mdout -p ../../$1_solvated.prmtop -c $1_requil.rst -r $1_equil.rst -ref $1_requil.rst -inf $1_equil.info -x $1_equil.nc
+EOF
+
+    cat > process_equil.cpptraj << EOF
+    parm ../../$1_solvated.prmtop
+    trajin $1_equil.nc
+
+    autoimage
+    rms fit $restraint@CA
+
+    trajout $1_equil_aligned.nc
+    trajout $1_equilibrated.pdb pdb onlyframes 50 50 1
 EOF
 fi
 
