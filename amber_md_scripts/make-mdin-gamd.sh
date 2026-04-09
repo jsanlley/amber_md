@@ -24,7 +24,7 @@ else
     iwrap=1,
     barostat=1,
     cut=10.0,
-    nstlim=5000000, ! 10ns total simulation time = ntcmd+nteb
+    nstlim=5050000, ! 10ns total simulation time = ntcmd+nteb
     ntpr=50000, ! 100ps write 1000 frames to mdout and mdinfo files (p.342)
     nscm=1000, ! removal of transaltional and rotational center of mass (p. 344)
     ntwx=50000, ! 100ps write 1000 frames coordinates to nc file (p.342)
@@ -32,12 +32,12 @@ else
     
     igamd=3, ! dual boost
     iE=1, ! threshold energy to lower bound
-    irest_gamd=0, ! 
-    ntave=50000, ! 100ps interval steps to calculate simulation statistics (multiple of ntcmdprep, ntcmd, ntebprep, and nteb)
-    ntcmd=1250000, ! 2.5ns number of initial conventional molecular dynamics simulation steps
-    ntcmdprep=250000, ! 0.5ns number of preparation conventional molecular dynamics steps. This is used for system equilibration and the potential energies biasing prep MD steps
+    irest_gamd=0, ! change to 1 for continuing a run 
+    ntave=5000, ! 100ps interval steps to calculate simulation statistics (multiple of ntcmdprep, ntcmd, ntebprep, and nteb)
+    ntcmd=25000, ! 50ps number of initial conventional molecular dynamics simulation steps
+    ntcmdprep=5000, ! 10ns number of preparation conventional molecular dynamics steps. This is used for system equilibration and the potential energies biasing prep MD steps
     nteb=1250000, ! 2.5ns of biasing MD steps
-    ntebprep=250000, ! 0.5ns number of preparation biasing molecular dynamics simulation steps
+    ntebprep=20000, ! 0.5ns number of preparation biasing molecular dynamics simulation steps
     sigma0P=6.0, ! first potential boost upper limit
     sigma0D=6.0, ! dual potential boost upper limit
    /
