@@ -1,5 +1,7 @@
 #!/bin/bash
 
+exec "$(dirname "$0")/make_min.sh" apo_monomer "$1" "${2:-}"
+
 # # of salts for monomeric system = ~ 52
 # # of salts for dimeric system = ~64
 
