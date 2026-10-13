@@ -87,6 +87,8 @@ The normal restart chain is `heat.rst -> requil.rst -> equil.rst`.
 ### `5-prod`: production
 
 - `make_prod.sh`: generates a 250 ns NPT production input and a GPU SLURM launcher. The generated launcher currently has only replica 1 enabled; later replica commands remain commented out.
+- `make_prod.slurm`: older variant of `make_prod.sh` restored from the pre-consolidation `make_md_scripts/`; kept for reference until it is confirmed whether it is still needed.
+- `put_prod.sh`: combines production replicas by sourcing `~/scripts/amber_md/make_md_scripts/make_combine_prod_$2.sh`. That helper does not exist in this repo, so the script is currently broken.
 
 Scheduler account, partition, GPU, Conda, and wall-time settings are cluster-specific and should eventually be configuration rather than scientific workflow logic.
 

@@ -18,3 +18,8 @@ prod:
 
 
 File structure con
+
+Notes:
+  Jupyter notebooks (RMSD/RMSF, POVME, PCA, MMGBSA and other analysis notebooks) were moved out of this repo
+  and now live in ../jupyter-notebooks. They remain available in this repo's git history before commit e14c217.
+  Simulation data (trajectories, restarts, topologies, logs) stays on GPFS and is excluded via .gitignore.
