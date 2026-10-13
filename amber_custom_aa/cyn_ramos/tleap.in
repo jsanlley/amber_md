@@ -1,0 +1,9 @@
+loadamberprep CYN.prepin
+source leaprc.protein.ff14SB
+
+loadamberparams CYN_gaff_mod.frcmod 
+loadamberparams CYN_ff14SB_mod.frcmod
+
+aa = sequence {ACE CYN NME}
+saveAmberParm aa aa.prmtop aa.rst7
+quit

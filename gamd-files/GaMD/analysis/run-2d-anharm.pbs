@@ -1,0 +1,23 @@
+#!/bin/sh
+
+#SBATCH --job-name=2d-anharmonicty
+
+#SBATCH --ntasks=1
+
+#SBATCH --cpus-per-task=1
+
+#SBATCH --time=00:20:00
+
+#SBATCH --output=log.%x.%j
+
+#SBATCH --gres=gpu:1
+
+#SBATCH --qos=gpu_access
+
+source /shared/apps/software/amber24/amber.sh
+#which pmemd.cuda
+export PATH=/shared/apps/software/amber24/miniconda/bin:$PATH
+#gamd 1D
+./create-2d-anharmonicity.sh Phi_all.dat Psi_all.dat gamd-all.log
+
+

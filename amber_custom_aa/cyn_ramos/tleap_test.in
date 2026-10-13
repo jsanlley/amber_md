@@ -1,0 +1,9 @@
+source leaprc.protein.ff14SB
+
+loadamberprep CYN.prepin
+
+loadamberparams CYN_ff14SB_mod.frcmod
+loadamberparams CYN_gaff_mod.frcmod
+
+pdb = loadpdb CysCNH_test.pdb
+check pdb

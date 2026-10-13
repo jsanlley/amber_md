@@ -1,0 +1,7 @@
+    parm ../../mpro_apo_monomer_solvated.prmtop
+    trajin mpro_apo_monomer_gamd.nc
+
+    autoimage
+    rms fit :1-306@CA
+
+    trajout mpro_apo_monomer_gamd_aligned.nc

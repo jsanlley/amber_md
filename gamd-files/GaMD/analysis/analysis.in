@@ -1,0 +1,7 @@
+parm ~/gamd/GaMD/analysis/Ala.parm7
+reference ~/gamd/GaMD/analysis/Ala.pdb
+trajin /shared/data/trajectory/gamd.nc
+autoimage
+dihedral Phi :1@C :2@N :2@CA :2@C out Phi.dat
+dihedral Psi :1@N :1@CA :1@C :2@N out Psi.dat
+

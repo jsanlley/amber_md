@@ -1,0 +1,21 @@
+#!/bin/sh
+
+#SBATCH --job-name=production
+
+#SBATCH --ntasks=1
+
+#SBATCH --cpus-per-task=1
+
+#SBATCH --time=00:20:00
+
+#SBATCH --output=log.%x.%j
+
+#SBATCH --gres=gpu:1
+
+#SBATCH --qos=gpu_access
+
+source /shared/apps/software/amber24/amber.sh
+which pmemd.cuda
+
+#gamd equilibration
+pmemd.cuda -O -i gamd-restart.in -p Ala.parm7 -c gamd-1.rst -o md-2.out -x md-2.nc -r gamd-2.rst -gamd gamd-2.log

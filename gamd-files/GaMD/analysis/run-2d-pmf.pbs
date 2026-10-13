@@ -1,0 +1,13 @@
+#!/bin/sh
+#SBATCH --job-name=pmf-2d
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:20:00
+#SBATCH --output=log.%x.%j
+
+source /shared/apps/software/amber24/amber.sh
+cd ~/GaMD/analysis
+export PATH=/shared/apps/software/amber24/miniconda/bin:$PATH
+chmod +x do-reweighted-2d.sh
+./do-reweighted-2d.sh Phi_all.dat Psi_all.dat gamd-all.log
+

@@ -1,0 +1,22 @@
+#!/bin/sh
+
+#SBATCH --job-name=equilibration
+
+#SBATCH --ntasks=1
+
+#SBATCH --cpus-per-task=1
+
+#SBATCH --time=00:20:00
+
+#SBATCH --output=log.%x.%j
+
+#SBATCH --gres=gpu:1
+
+#SBATCH --qos=gpu_access
+
+source /shared/apps/software/amber24/amber.sh
+which pmemd.cuda
+
+#gamd equilibration
+pmemd.cuda -O -i md.in -p Ala.parm7 -c cmd.rst7 -o md-1.out -x md-1.nc -r gamd-1.rst -gamd gamd-1.log
+
